@@ -111,7 +111,7 @@ run "-p 8080 -e PORT=8080 \
      " "$containername"
 
 containername=frontend
-run "-p 8080:8080 -e PORT=8080 \
+run "-p 8081:8080 -e PORT=8080 \
      -e PRODUCT_CATALOG_SERVICE_ADDR=productcatalogservice:3550 \
      -e SHIPPING_SERVICE_ADDR=shippingservice:50051 \
      -e CURRENCY_SERVICE_ADDR=currencyservice:7000 \
