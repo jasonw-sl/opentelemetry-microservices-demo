@@ -1,8 +1,8 @@
 {
   "tokenFile": "sltoken.txt",
   "createBuildSessionId": true,
-  "appName": "${System.getenv('service.name')}",
+  "appName": "otel_${System.getenv('service.name')}",
   "branchName": "${System.getenv('GIT_BRANCH')}",
   "buildName": "${System.getenv('BUILD_NUMBER')}",
-  "packagesIncluded": "*hipstershop.*",
+  "packagesIncluded": "*hipstershop.*"
 }
