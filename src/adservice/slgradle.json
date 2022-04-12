@@ -1,0 +1,8 @@
+{
+  "tokenFile": "${SL_TOKEN}",
+  "createBuildSessionId": true,
+  "appName": "${System.getenv('service.name')}",
+  "branchName": "${System.getenv('GIT_BRANCH')}",
+  "buildName": "${System.getenv('BUILD_NUMBER')}",
+  "packagesIncluded": "*hipstershop.*",
+}
