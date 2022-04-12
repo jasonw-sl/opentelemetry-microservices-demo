@@ -16,15 +16,13 @@ FROM openjdk:17-slim as builder
 
 WORKDIR /app
 
-COPY ["sl-build-scanner.jar", "sl-test-listener.jar", "sltoken.txt", "slgradle.json", "./"]
-RUN java -jar sl-build-scanner.jar -gradle -configfile slgradle.json -workspacepath .
-
 COPY ["build.gradle", "gradlew", "./"]
 COPY gradle gradle
 RUN chmod +x gradlew
 RUN ./gradlew downloadRepos
 
 COPY . .
+RUN java -jar sl-build-scanner.jar -gradle -configfile slgradle.json -workspacepath .
 RUN chmod +x gradlew
 RUN ./gradlew installDist
 
