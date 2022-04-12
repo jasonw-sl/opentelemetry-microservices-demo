@@ -16,6 +16,9 @@ FROM openjdk:17-slim as builder
 
 WORKDIR /app
 
+COPY ["../../sl-build-scanner.jar", "../../sl-test-listener.jar", "../../sltoken.txt"]
+RUN java -jar sl-build-scanner.jar -gradle -configfile slgradle.json -workspacepath .
+
 COPY ["build.gradle", "gradlew", "./"]
 COPY gradle gradle
 RUN chmod +x gradlew
