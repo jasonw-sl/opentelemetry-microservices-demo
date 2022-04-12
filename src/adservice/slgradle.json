@@ -1,5 +1,5 @@
 {
-  "tokenFile": "${SL_TOKEN}",
+  "tokenFile": "sltoken.txt",
   "createBuildSessionId": true,
   "appName": "${System.getenv('service.name')}",
   "branchName": "${System.getenv('GIT_BRANCH')}",
