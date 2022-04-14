@@ -5,6 +5,8 @@
   "branchName": "master",
   "buildName": "SL_Timestamp",
   "packagesIncluded": "*hipstershop*",
-  "logDestination": "console",
-  "logLevel": "debug"
+  "sealightsJvmParams": {
+    "sl.log.level": "info",
+    "sl.log.toConsole": "true"
+  }
 }
