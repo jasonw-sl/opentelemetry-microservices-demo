@@ -30,8 +30,8 @@ COPY package*.json ./
 RUN npm install --only=production
 
 RUN npm install slnodejs
-RUN BUILD_NAME=$(date +%F_%T) && ./node_modules/.bin/slnodejs config --tokenfile /path/to/sltoken.txt --appname "otel_adservice" --branch "master" --build "${BUILD_NAME}"
-RUN ./node_modules/.bin/slnodejs build --tokenfile /path/to/sltoken.txt --buildsessionidfile buildSessionId --workspacepath "." --scm git --es6Modules
+RUN BUILD_NAME=$(date +%F_%T) && ./node_modules/.bin/slnodejs config --tokenfile sltoken.txt --appname "otel_adservice" --branch "master" --build "${BUILD_NAME}"
+RUN ./node_modules/.bin/slnodejs build --tokenfile sltoken.txt --buildsessionidfile buildSessionId --workspacepath "." --scm git --es6Modules
 
 FROM base
 
