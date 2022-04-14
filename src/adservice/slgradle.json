@@ -4,5 +4,7 @@
   "appName": "otel_adservice",
   "branchName": "master",
   "buildName": "SL_Timestamp",
-  "packagesIncluded": "*hipstershop.*"
+  "packagesIncluded": "*hipstershop.*",
+  "logDestination": "console",
+  "logLevel": "info"
 }
