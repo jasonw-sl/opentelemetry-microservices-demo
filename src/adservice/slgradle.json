@@ -6,5 +6,5 @@
   "buildName": "SL_Timestamp",
   "packagesIncluded": "*hipstershop*",
   "logDestination": "console",
-  "logLevel": "info"
+  "logLevel": "debug"
 }
