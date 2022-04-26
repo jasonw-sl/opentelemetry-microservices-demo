@@ -36,6 +36,7 @@ WORKDIR /email_server
 COPY . .
 
 RUN apt-get install -y build-essential
+RUN apt install libffi-dev
 RUN pip install sealights-python-agent
 RUN BUILD_NAME=$(date +%F_%T) && sl-python config --appname "otel_emailservice" --branchname master --buildname "${BUILD_NAME}" --exclude "*venv*"
 RUN sl-python build
