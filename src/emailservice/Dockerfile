@@ -41,6 +41,7 @@ RUN apt-get install -qq  -y git
 RUN pip install sealights-python-agent
 RUN BUILD_NAME=$(date +%F_%T) && sl-python config --appname "otel_emailservice" --branchname master --buildname "${BUILD_NAME}" --exclude "*venv*" --scm none
 RUN sl-python build
+ENV SL_DEBUG=true
 
 EXPOSE 8080
 ENTRYPOINT [ "sl-python", "run", "--labid", "integ_test_otel", "opentelemetry-instrument", "python", "email_server.py" ]
