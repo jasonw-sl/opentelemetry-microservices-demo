@@ -35,5 +35,9 @@ WORKDIR /email_server
 # Add the application
 COPY . .
 
+RUN pip install sealights-python-agent
+RUN BUILD_NAME=$(date +%F_%T) && sl-python config --appname "otel_emailservice" --branchname master --buildname "${BUILD_NAME}" --exclude "*venv*"
+RUN sl-python build
+
 EXPOSE 8080
-ENTRYPOINT [ "opentelemetry-instrument", "python", "email_server.py" ]
+ENTRYPOINT [ "sl-python", "run", "--labid", "integ_test_otel", "opentelemetry-instrument", "python", "email_server.py" ]
