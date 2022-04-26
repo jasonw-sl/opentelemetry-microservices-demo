@@ -40,5 +40,7 @@ WORKDIR /app
 COPY --from=builder /app .
 COPY agent/opentelemetry-javaagent.jar .
 
+ENV JAVA_TOOL_OPTIONS="-javaagent:sl-test-listener.jar -Dsl.tags=script,container -Dsl.labId=integ_test_otel"
+
 EXPOSE 9555
 ENTRYPOINT ["/app/build/install/hipstershop/bin/AdService"]
