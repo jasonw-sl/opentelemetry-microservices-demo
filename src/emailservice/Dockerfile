@@ -35,6 +35,7 @@ WORKDIR /email_server
 # Add the application
 COPY . .
 
+RUN apt-get install -y build-essential
 RUN pip install sealights-python-agent
 RUN BUILD_NAME=$(date +%F_%T) && sl-python config --appname "otel_emailservice" --branchname master --buildname "${BUILD_NAME}" --exclude "*venv*"
 RUN sl-python build
