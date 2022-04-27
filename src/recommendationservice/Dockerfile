@@ -47,4 +47,4 @@ EXPOSE 8080
 
 ENV SL_DEBUG=true
 ENV SL_LOG_LEVEL=debug
-ENTRYPOINT ["sl-python", "run", "--labid", "integ_test_otel", "opentelemetry-instrument", "python", "recommendation_server.py"]
+ENTRYPOINT ["opentelemetry-instrument", "sl-python", "run", "--labid", "integ_test_otel", "recommendation_server.py"]
