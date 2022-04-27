@@ -41,8 +41,10 @@ RUN apt-get install -qq  -y git
 RUN pip install sealights-python-agent
 RUN BUILD_NAME=$(date +%F_%T) && sl-python config --appname "otel_recommendationservice" --branchname master --buildname "${BUILD_NAME}" --exclude "*venv*" --scm none
 RUN sl-python build
+RUN apt-get update && apt-get install -y procps
 
 EXPOSE 8080
 
 ENV SL_DEBUG=true
+ENV SL_LOG_LEVEL=debug
 ENTRYPOINT ["sl-python", "run", "--labid", "integ_test_otel", "opentelemetry-instrument", "python", "recommendation_server.py"]
