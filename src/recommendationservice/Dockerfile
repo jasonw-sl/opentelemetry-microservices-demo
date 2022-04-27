@@ -44,4 +44,5 @@ RUN sl-python build
 
 EXPOSE 8080
 
+ENV SL_DEBUG=true
 ENTRYPOINT ["sl-python", "run", "--labid", "integ_test_otel", "opentelemetry-instrument", "python", "recommendation_server.py"]
