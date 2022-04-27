@@ -43,4 +43,4 @@ RUN BUILD_NAME=$(date +%F_%T) && sl-python config --appname "otel_emailservice" 
 RUN sl-python build
 
 EXPOSE 8080
-ENTRYPOINT [ "sl-python", "run", "--labid", "integ_test_otel", "opentelemetry-instrument", "python", "email_server.py" ]
+ENTRYPOINT ["opentelemetry-instrument",  "sl-python", "run", "--labid", "integ_test_otel", "python", "email_server.py" ]
