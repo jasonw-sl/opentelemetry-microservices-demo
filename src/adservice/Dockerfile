@@ -42,5 +42,7 @@ COPY agent/opentelemetry-javaagent.jar .
 
 ENV JAVA_TOOL_OPTIONS="-javaagent:sl-test-listener.jar -Dsl.tags=script,container -Dsl.labId=integ_test_otel"
 
+RUN apt-get update && apt-get install -y procps
+
 EXPOSE 9555
 ENTRYPOINT ["/app/build/install/hipstershop/bin/AdService"]
