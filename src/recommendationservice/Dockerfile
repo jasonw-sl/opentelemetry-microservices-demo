@@ -45,6 +45,4 @@ RUN apt-get update && apt-get install -y procps
 
 EXPOSE 8080
 
-ENV SL_DEBUG=true
-ENV SL_LOG_LEVEL=debug
 ENTRYPOINT ["opentelemetry-instrument", "sl-python", "run", "--labid", "integ_test_otel", "python", "recommendation_server.py"]
