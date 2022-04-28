@@ -28,5 +28,6 @@ RUN GRPC_HEALTH_PROBE_VERSION=v0.4.7 && \
     chmod +x /bin/grpc_health_probe
 WORKDIR /app
 COPY --from=builder /cartservice .
+COPY --from=builder /sealights /sealights
 ENV ASPNETCORE_URLS http://*:7070
 ENTRYPOINT ["/app/cartservice"]
