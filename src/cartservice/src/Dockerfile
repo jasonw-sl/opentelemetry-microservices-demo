@@ -19,7 +19,11 @@ COPY cartservice.csproj .
 RUN dotnet restore cartservice.csproj -r linux-musl-x64
 COPY . .
 RUN dotnet publish cartservice.csproj -p:PublishSingleFile=true -r linux-musl-x64 --self-contained true -p:PublishTrimmed=True -p:TrimMode=Link -c release -o /cartservice --no-restore
-ADD https://agents.sealights.co/dotnetcore/sealights-dotnet-agent-3.0.0-beta.2.tar.gz /sealights/sealights-dotnet-agent-3.0.0-beta.2.tar.gz
+
+WORKDIR /sealights
+ADD https://agents.sealights.co/dotnetcore/sealights-dotnet-agent-3.0.0-beta.2.tar.gz sealights-dotnet-agent-3.0.0-beta.2.tar.gz
+RUN tar xvfz sealights-dotnet-agent-3.0.0-beta.2.tar.gz
+
 
 # https://mcr.microsoft.com/v2/dotnet/runtime-deps/tags/list
 FROM mcr.microsoft.com/dotnet/runtime-deps:6.0.2-alpine3.14-amd64
