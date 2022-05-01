@@ -26,7 +26,7 @@ RUN tar xvfz sealights-dotnet-agent-3.0.0-beta.2.tar.gz
 
 
 # https://mcr.microsoft.com/v2/dotnet/runtime-deps/tags/list
-FROM mcr.microsoft.com/dotnet/runtime-deps:6.0.2-alpine3.14-amd64
+FROM mcr.microsoft.com/dotnet/sdk:6.0.200
 RUN GRPC_HEALTH_PROBE_VERSION=v0.4.7 && \
     wget -qO/bin/grpc_health_probe https://github.com/grpc-ecosystem/grpc-health-probe/releases/download/${GRPC_HEALTH_PROBE_VERSION}/grpc_health_probe-linux-amd64 && \
     chmod +x /bin/grpc_health_probe
