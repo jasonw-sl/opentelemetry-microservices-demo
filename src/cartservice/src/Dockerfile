@@ -24,7 +24,7 @@ WORKDIR /sealights
 ADD https://agents.sealights.co/dotnetcore/sealights-dotnet-agent-3.0.0-beta.3.tar.gz sealights-dotnet-agent-3.0.0-beta.3.tar.gz
 RUN tar xvfz sealights-dotnet-agent-3.0.0-beta.3.tar.gz
 
-RUN BUILD_NAME=$(date +%F_%T) && dotnet SL.DotNet.dll config --appName cartservice --branchName main --buildName ${BUILD_NAME} --buildSessionIdFile /sealights/buildSessionId.txt --tokenFile sltoken.txt --includeNamespace "cartservice.*"
+RUN BUILD_NAME=$(date +%F_%T) && dotnet SL.DotNet.dll config --appName otel_cartservice --branchName main --buildName ${BUILD_NAME} --buildSessionIdFile /sealights/buildSessionId.txt --tokenFile sltoken.txt --includeNamespace "cartservice.*"
 RUN dotnet SL.DotNet.dll scan --buildSessionIdFile /sealights/buildSessionId.txt --binDir /cartservice --tokenFile sltoken.txt --ignoreGeneratedCode true
 
 # https://mcr.microsoft.com/v2/dotnet/runtime-deps/tags/list
