@@ -37,4 +37,4 @@ WORKDIR /app
 COPY --from=builder /cartservice .
 COPY --from=builder /sealights /sealights
 ENV ASPNETCORE_URLS http://*:7070
-ENTRYPOINT ["dotnet /sealights/SL.DotNet.dll testListener --buildSessionIdFile /sealights/buildSessionId.txt --tokenFile sltoken.txt --labId integ_test_otel --workingDir /app --target /app/cartservice "]
+ENTRYPOINT ["dotnet /sealights/SL.DotNet.dll testListener --buildSessionIdFile /sealights/buildSessionId.txt --tokenFile /app/sltoken.txt --labId integ_test_otel --workingDir /app --target /app/cartservice "]
