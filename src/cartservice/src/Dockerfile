@@ -24,8 +24,8 @@ WORKDIR /sealights
 ADD https://agents.sealights.co/dotnetcore/sealights-dotnet-agent-3.0.0-beta.3.tar.gz sealights-dotnet-agent-3.0.0-beta.3.tar.gz
 RUN tar xvfz sealights-dotnet-agent-3.0.0-beta.3.tar.gz
 
-RUN BUILD_NAME=$(date +%F_%T) && dotnet SL.DotNet.dll config --appName otel_cartservice --branchName main --buildName ${BUILD_NAME} --buildSessionIdFile /sealights/buildSessionId.txt --tokenFile sltoken.txt --includeNamespace "cartservice.*"
-RUN dotnet SL.DotNet.dll scan --buildSessionIdFile /sealights/buildSessionId.txt --binDir /cartservice --tokenFile sltoken.txt --ignoreGeneratedCode true
+RUN BUILD_NAME=$(date +%F_%T) && dotnet SL.DotNet.dll config --appName otel_cartservice --branchName main --buildName ${BUILD_NAME} --buildSessionIdFile /sealights/buildSessionId.txt --tokenFile /sltoken.txt --includeNamespace "cartservice.*"
+RUN dotnet SL.DotNet.dll scan --buildSessionIdFile /sealights/buildSessionId.txt --binDir /cartservice --tokenFile /sltoken.txt --ignoreGeneratedCode true
 
 # https://mcr.microsoft.com/v2/dotnet/runtime-deps/tags/list
 FROM mcr.microsoft.com/dotnet/sdk:6.0.200
@@ -36,4 +36,4 @@ WORKDIR /app
 COPY --from=builder /cartservice .
 COPY --from=builder /sealights /sealights
 ENV ASPNETCORE_URLS http://*:7070
-ENTRYPOINT ["dotnet /sealights/SL.DotNet.dll testListener --buildSessionIdFile /sealights/buildSessionId.txt --tokenFile sltoken.txt --workingDir /app --target /app/cartservice "]
+ENTRYPOINT ["dotnet /sealights/SL.DotNet.dll testListener --buildSessionIdFile /sealights/buildSessionId.txt --tokenFile sltoken.txt --labId integ_test_otel --workingDir /app --target /app/cartservice "]
