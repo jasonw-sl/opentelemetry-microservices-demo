@@ -38,5 +38,14 @@ WORKDIR /app
 COPY --from=builder /cartservice .
 COPY --from=builder /sealights /sealights
 ENV ASPNETCORE_URLS http://*:7070
+
+ENV CORECLR_ENABLE_PROFILING 1
+ENV CORECLR_PROFILER "{3B1DAA64-89D4-4999-ABF4-6A979B650B7D}"
+ENV CORECLR_PROFILER_PATH_32 /sealights/libSL.DotNet.ProfilerLib.Linux.so
+ENV CORECLR_PROFILER_PATH_64 /sealights/libSL.DotNet.ProfilerLib.Linux.so
+ENV SL_CollectorId SL_Agent
+ENV SL_LogDir /tmp/logs
+#ENV SL_LogLevel=6
+
 #ENTRYPOINT ["dotnet","/sealights/SL.DotNet.dll","testListener","--buildSessionIdFile","/sealights/buildSessionId.txt","--labId","integ_test_otel","--workingDir","/app","--target","cartservice"]
 ENTRYPOINT ["/app/cartservice"]
