@@ -50,5 +50,5 @@ ENV ASPNETCORE_URLS http://*:7070
 #ENV SL_LogDir /tmp/logs
 #ENV SL_LogLevel=6
 
-#ENTRYPOINT ["dotnet","/sealights/SL.DotNet.dll","testListener","--buildSessionIdFile","/sealights/buildSessionId.txt","--labId","integ_test_otel","--workingDir","/app","--target","cartservice"]
-ENTRYPOINT ["/app/cartservice"]
+ENTRYPOINT ["dotnet","/sealights/SL.DotNet.dll","testListener","--buildSessionIdFile","/sealights/buildSessionId.txt","--labId","integ_test_otel","--workingDir","/app","--target","cartservice"]
+#ENTRYPOINT ["/app/cartservice"]
