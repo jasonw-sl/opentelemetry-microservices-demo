@@ -28,7 +28,7 @@ RUN tar xvfz sealights-dotnet-agent-3.0.0-beta.3.tar.gz
 RUN BUILD_NAME=$(date +%F_%T) && dotnet SL.DotNet.dll config --appName otel_cartservice --branchName main --buildName ${BUILD_NAME} --buildSessionIdFile /sealights/buildSessionId.txt --includeNamespace "cartservice.*"
 RUN dotnet SL.DotNet.dll scan --buildSessionIdFile /sealights/buildSessionId.txt --binDir /app --ignoreGeneratedCode true
 
-RUN dotnet SL.DotNet.dll stoptBackgroundTestListener --buildSessionIdFile /sealights/buildSessionId.txt --testListenerSessionKey SL_CovCollectorAgentCartservice
+RUN dotnet SL.DotNet.dll stopBackgroundTestListener --buildSessionIdFile /sealights/buildSessionId.txt --testListenerSessionKey SL_CovCollectorAgentCartservice
 RUN dotnet SL.DotNet.dll startBackgroundTestListener --buildSessionIdFile /sealights/buildSessionId.txt --testListenerSessionKey SL_CovCollectorAgentCartservice
 
 # https://mcr.microsoft.com/v2/dotnet/runtime-deps/tags/list
