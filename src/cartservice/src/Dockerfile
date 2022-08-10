@@ -28,6 +28,9 @@ RUN tar xvfz sealights-dotnet-agent-3.0.0-beta.3.tar.gz
 RUN BUILD_NAME=$(date +%F_%T) && dotnet SL.DotNet.dll config --appName otel_cartservice --branchName main --buildName ${BUILD_NAME} --buildSessionIdFile /sealights/buildSessionId.txt --includeNamespace "cartservice.*"
 RUN dotnet SL.DotNet.dll scan --buildSessionIdFile /sealights/buildSessionId.txt --binDir /app --ignoreGeneratedCode true
 
+RUN dotnet SL.DotNet.dll stoptBackgroundTestListener --buildSessionIdFile /sealights/buildSessionId.txt --testListenerSessionKey SL_CovCollectorAgentCartservice
+RUN dotnet SL.DotNet.dll startBackgroundTestListener --buildSessionIdFile /sealights/buildSessionId.txt --testListenerSessionKey SL_CovCollectorAgentCartservice
+
 # https://mcr.microsoft.com/v2/dotnet/runtime-deps/tags/list
 #FROM mcr.microsoft.com/dotnet/sdk:6.0.200
 FROM mcr.microsoft.com/dotnet/runtime-deps:6.0.3-alpine3.15-amd64
@@ -47,8 +50,5 @@ ENV SL_CollectorId SL_CovCollectorAgentCartservice
 ENV SL_LogDir /tmp/logs
 #ENV SL_LogLevel=6
 
-RUN SL.DotNet.exe stoptBackgroundTestListener --buildSessionIdFile /sealights/buildSessionId.txt --testListenerSessionKey SL_CovCollectorAgentCartservice
-RUN SL.DotNet.exe startBackgroundTestListener --buildSessionIdFile /sealights/buildSessionId.txt --testListenerSessionKey SL_CovCollectorAgentCartservice
-  
 #ENTRYPOINT ["dotnet","/sealights/SL.DotNet.dll","testListener","--buildSessionIdFile","/sealights/buildSessionId.txt","--labId","integ_test_otel","--workingDir","/app","--target","cartservice"]
 ENTRYPOINT ["/app/cartservice"]
