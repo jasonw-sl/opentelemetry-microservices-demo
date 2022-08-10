@@ -28,9 +28,6 @@ RUN tar xvfz sealights-dotnet-agent-3.0.0-beta.3.tar.gz
 RUN BUILD_NAME=$(date +%F_%T) && dotnet SL.DotNet.dll config --appName otel_cartservice --branchName main --buildName ${BUILD_NAME} --buildSessionIdFile /sealights/buildSessionId.txt --includeNamespace "cartservice.*"
 RUN dotnet SL.DotNet.dll scan --buildSessionIdFile /sealights/buildSessionId.txt --binDir /app --ignoreGeneratedCode true
 
-#RUN dotnet SL.DotNet.dll stopBackgroundTestListener --buildSessionIdFile /sealights/buildSessionId.txt --testListenerSessionKey SL_CovCollectorAgentCartservice
-#RUN dotnet SL.DotNet.dll startBackgroundTestListener --buildSessionIdFile /sealights/buildSessionId.txt --testListenerSessionKey SL_CovCollectorAgentCartservice
-
 # https://mcr.microsoft.com/v2/dotnet/runtime-deps/tags/list
 FROM mcr.microsoft.com/dotnet/sdk:6.0.400-alpine3.15-amd64
 #FROM mcr.microsoft.com/dotnet/runtime-deps:6.0.3-alpine3.15-amd64
@@ -42,13 +39,15 @@ COPY --from=builder /cartservice .
 COPY --from=builder /sealights /sealights
 ENV ASPNETCORE_URLS http://*:7070
 
-#ENV CORECLR_ENABLE_PROFILING 1
-#ENV CORECLR_PROFILER "{3B1DAA64-89D4-4999-ABF4-6A979B650B7D}"
-#ENV CORECLR_PROFILER_PATH_32 /sealights/libSL.DotNet.ProfilerLib.Linux.so
-#ENV CORECLR_PROFILER_PATH_64 /sealights/libSL.DotNet.ProfilerLib.Linux.so
-#ENV SL_CollectorId SL_CovCollectorAgentCartservice
-#ENV SL_LogDir /tmp/logs
-#ENV SL_LogLevel=6
+ENV CORECLR_ENABLE_PROFILING 1
+ENV CORECLR_PROFILER "{3B1DAA64-89D4-4999-ABF4-6A979B650B7D}"
+ENV CORECLR_PROFILER_PATH_32 /sealights/libSL.DotNet.ProfilerLib.Linux.so
+ENV CORECLR_PROFILER_PATH_64 /sealights/libSL.DotNet.ProfilerLib.Linux.so
+ENV SL_CollectorId SL_CovCollectorAgentCartservice
+ENV SL_LogDir /tmp/logs
+ENV SL_LogLevel=6
 
-ENTRYPOINT ["dotnet","/sealights/SL.DotNet.dll","testListener","--buildSessionIdFile","/sealights/buildSessionId.txt","--labId","integ_test_otel","--workingDir","/app","--target","cartservice"]
-#ENTRYPOINT ["/app/cartservice"]
+RUN dotnet /sealights/SL.DotNet.dll startBackgroundTestListener --buildSessionIdFile /sealights/buildSessionId.txt --testListenerSessionKey SL_CovCollectorAgentCartservice &
+
+#ENTRYPOINT ["dotnet","/sealights/SL.DotNet.dll","testListener","--buildSessionIdFile","/sealights/buildSessionId.txt","--labId","integ_test_otel","--workingDir","/app","--target","cartservice"]
+ENTRYPOINT ["/app/cartservice"]
