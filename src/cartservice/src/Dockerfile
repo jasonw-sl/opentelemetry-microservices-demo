@@ -29,7 +29,8 @@ RUN BUILD_NAME=$(date +%F_%T) && dotnet SL.DotNet.dll config --appName otel_cart
 RUN dotnet SL.DotNet.dll scan --buildSessionIdFile /sealights/buildSessionId.txt --binDir /app --ignoreGeneratedCode true
 
 # https://mcr.microsoft.com/v2/dotnet/runtime-deps/tags/list
-FROM mcr.microsoft.com/dotnet/sdk:6.0.400-alpine3.15-amd64
+#FROM mcr.microsoft.com/dotnet/sdk:6.0.400-alpine3.15-amd64
+FROM mcr.microsoft.com/dotnet/sdk:6.0
 #FROM mcr.microsoft.com/dotnet/runtime-deps:6.0.3-alpine3.15-amd64
 RUN GRPC_HEALTH_PROBE_VERSION=v0.4.7 && \
     wget -qO/bin/grpc_health_probe https://github.com/grpc-ecosystem/grpc-health-probe/releases/download/${GRPC_HEALTH_PROBE_VERSION}/grpc_health_probe-linux-amd64 && \
@@ -44,8 +45,8 @@ ENV ASPNETCORE_URLS http://*:7070
 #ENV CORECLR_PROFILER_PATH_32 /sealights/libSL.DotNet.ProfilerLib.Linux.so
 #ENV CORECLR_PROFILER_PATH_64 /sealights/libSL.DotNet.ProfilerLib.Linux.so
 #ENV SL_CollectorId SL_CovCollectorAgentCartservice
-ENV SL_LogDir /tmp/logs
-ENV SL_LogLevel=6
+#ENV SL_LogDir /tmp/logs
+#ENV SL_LogLevel=6
 
 #RUN dotnet /sealights/SL.DotNet.dll startBackgroundTestListener --buildSessionIdFile /sealights/buildSessionId.txt --testListenerSessionKey SL_CovCollectorAgentCartservice &
 
