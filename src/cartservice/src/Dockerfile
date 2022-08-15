@@ -49,5 +49,5 @@ ENV SL_LogLevel=6
 
 #RUN dotnet /sealights/SL.DotNet.dll startBackgroundTestListener --buildSessionIdFile /sealights/buildSessionId.txt --testListenerSessionKey SL_CovCollectorAgentCartservice &
 
-ENTRYPOINT ["dotnet","/sealights/SL.DotNet.dll","testListener","--buildSessionIdFile","/sealights/buildSessionId.txt","--labId","integ_test_otel","--workingDir","/app","--target","cartservice"]
+ENTRYPOINT ["dotnet","/sealights/SL.DotNet.dll","testListener","--buildSessionIdFile","/sealights/buildSessionId.txt","--labId","integ_test_otel","--workingDir","/app","--target","cartservice","--profilerLogDir","/tmp","--profilerLogLevel","6","--logAppendFile","true","--logFilename","/tmp/collector"]
 #ENTRYPOINT ["/app/cartservice"]
