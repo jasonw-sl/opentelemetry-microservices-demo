@@ -22,6 +22,10 @@ COPY go.mod go.sum ./
 RUN go mod download
 COPY . .
 
+RUN slcli config init --lang go --token sltoken.txt
+RUN BUILD_NAME=$(date +%F_%T) && slcli config create-bsid --app otel_shippingservice --branch master --build "${BUILD_NAME}"
+RUN slcli scan --bsid buildSessionId.txt --path-to-scanner slgoagent --workspacepath . --scm none
+
 # Skaffold passes in debug-oriented compiler flags
 ARG SKAFFOLD_GO_GCFLAGS
 RUN go build -gcflags="${SKAFFOLD_GO_GCFLAGS}" -o /go/bin/shippingservice .
