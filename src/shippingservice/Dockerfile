@@ -44,5 +44,7 @@ ENV APP_PORT=50051
 # See https://golang.org/pkg/runtime/
 ENV GOTRACEBACK=single
 
+ENV SEALIGHTS_LAB_ID=integ_test_otel
+
 EXPOSE 50051
 ENTRYPOINT ["/src/shippingservice"]
