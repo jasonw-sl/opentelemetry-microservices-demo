@@ -44,4 +44,4 @@ RUN sl-python build
 
 EXPOSE 8080
 
-ENTRYPOINT ["opentelemetry-instrument", "sl-python", "run", "--labid", "integ_test_otel", "python", "recommendation_server.py"]
+ENTRYPOINT ["sl-python", "run", "--labid", "integ_test_otel", "python", "recommendation_server.py"]
