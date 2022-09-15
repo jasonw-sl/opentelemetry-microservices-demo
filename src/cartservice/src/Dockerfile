@@ -48,11 +48,11 @@ ENV CORECLR_PROFILER="{3B1DAA64-89D4-4999-ABF4-6A979B650B7D}"
 ENV CORECLR_PROFILER_PATH_32=/sealights/libSL.DotNet.ProfilerLib.Linux.so
 ENV CORECLR_PROFILER_PATH_64=/sealights/libSL.DotNet.ProfilerLib.Linux.so
 ENV SL_CollectorId=SL_CovCollectorAgentCartservice
-ENV SL_IS_AZURE=true
+#ENV SL_IS_AZURE=1
 ENV SL_LogDir /tmp/logs
 ENV SL_LogLevel=6
 
-#RUN dotnet /sealights/SL.DotNet.dll startBackgroundTestListener --buildSessionIdFile /sealights/buildSessionId.txt --testListenerSessionKey SL_CovCollectorAgentCartservice &
+RUN dotnet /sealights/SL.DotNet.dll startBackgroundTestListener --buildSessionIdFile /sealights/buildSessionId.txt --testListenerSessionKey SL_CovCollectorAgentCartservice &
 
 #ENTRYPOINT ["dotnet","/sealights/SL.DotNet.dll","testListener","--buildSessionIdFile","/sealights/buildSessionId.txt","--labId","integ_test_otel","--workingDir","/app","--target","cartservice","--profilerLogDir","/tmp","--profilerLogLevel","6","--logAppendFile","true","--logFilename","/tmp/collector"]
 ENTRYPOINT ["/app/cartservice"]
