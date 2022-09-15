@@ -49,8 +49,8 @@ ENV CORECLR_PROFILER_PATH_32=/sealights/libSL.DotNet.ProfilerLib.Linux.so
 ENV CORECLR_PROFILER_PATH_64=/sealights/libSL.DotNet.ProfilerLib.Linux.so
 ENV SL_CollectorId=SL_CovCollectorAgentCartservice
 ENV SL_IS_AZURE=true
-#ENV SL_LogDir /tmp/logs
-#ENV SL_LogLevel=6
+ENV SL_LogDir /tmp/logs
+ENV SL_LogLevel=6
 
 #RUN dotnet /sealights/SL.DotNet.dll startBackgroundTestListener --buildSessionIdFile /sealights/buildSessionId.txt --testListenerSessionKey SL_CovCollectorAgentCartservice &
 
