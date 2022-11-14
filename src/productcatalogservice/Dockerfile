@@ -44,7 +44,8 @@ COPY products.json .
 # See https://golang.org/pkg/runtime/
 ENV GOTRACEBACK=single
 
-ENV SEALIGHTS_LAB_ID=integ_test_otel
+#ENV SEALIGHTS_LAB_ID=integ_test_otel
+ENV SEALIGHTS_LAB_ID=test_fix
 
 EXPOSE 3550
 ENTRYPOINT ["/src/server"]
