@@ -40,7 +40,7 @@ WORKDIR /app
 COPY --from=builder /app .
 COPY agent/opentelemetry-javaagent.jar .
 
-ENV JAVA_TOOL_OPTIONS="-javaagent:sl-test-listener.jar -Dsl.tags=script,container -Dsl.labId=integ_test_otel -Dsl.log.toConsole=true -Dsl.log.level=info --add-opens=java.base/jdk.internal.loader=ALL-UNNAMED"
+ENV JAVA_TOOL_OPTIONS="-javaagent:sl-test-listener.jar -Dsl.tags=script,container -Dsl.labId=integ_test_otel -Dsl.log.toConsole=true -Dsl.log.level=info"
 
 RUN apt-get update && apt-get install -y procps
 
