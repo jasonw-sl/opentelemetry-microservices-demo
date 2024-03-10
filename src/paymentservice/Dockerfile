@@ -48,4 +48,7 @@ RUN ./node_modules/.bin/slnodejs build --tokenfile sltoken.txt --buildsessionidf
 
 EXPOSE 50051
 
-ENTRYPOINT [ "./node_modules/.bin/slnodejs", "run", "--tokenfile", "sltoken.txt", "--buildsessionidfile", "buildSessionId", "--labid", "integ_test_otel", "--", "--require", "./tracing.js", "index.js" ]
+ENV SL_labId=integ_test_otel
+ENV NODE_OPTIONS="--require ./node_modules/slnodejs/lib/preload.js"
+
+ENTRYPOINT [ "node", "--require", "./tracing.js", "index.js" ]
