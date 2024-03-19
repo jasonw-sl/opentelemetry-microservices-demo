@@ -22,7 +22,7 @@ RUN dotnet publish cartservice.csproj -p:PublishSingleFile=true -r linux-x64 --s
 
 WORKDIR /sealights
 COPY sltoken.txt .
-ADD https://agents.sealights.co/dotnetcore/sealights-dotnet-agent-latest.tar.gz sealights-dotnet-agent-latest.tar.gz
+ADD https://agents.sealights.co/dotnetcore/latest/sealights-dotnet-agent-linux-self-contained.tar.gz sealights-dotnet-agent-latest.tar.gz
 RUN tar xvfz sealights-dotnet-agent-latest.tar.gz
 
 #RUN BUILD_NAME=$(date +%F_%T) && dotnet SL.DotNet.dll config --appName otel_cartservice --branchName main --buildName ${BUILD_NAME} --buildSessionIdFile /sealights/buildSessionId.txt --includeNamespace "cartservice.*"
