@@ -25,8 +25,8 @@ COPY sltoken.txt .
 ADD https://agents.sealights.co/dotnetcore/sealights-dotnet-agent-latest.tar.gz sealights-dotnet-agent-latest.tar.gz
 RUN tar xvfz sealights-dotnet-agent-latest.tar.gz
 
-RUN BUILD_NAME=$(date +%F_%T) && dotnet SL.DotNet.dll config --appName otel_cartservice --branchName main --buildName ${BUILD_NAME} --buildSessionIdFile /sealights/buildSessionId.txt --includeNamespace "cartservice.*"
-RUN dotnet SL.DotNet.dll scan --buildSessionIdFile /sealights/buildSessionId.txt --binDir /app --ignoreGeneratedCode true
+#RUN BUILD_NAME=$(date +%F_%T) && dotnet SL.DotNet.dll config --appName otel_cartservice --branchName main --buildName ${BUILD_NAME} --buildSessionIdFile /sealights/buildSessionId.txt --includeNamespace "cartservice.*"
+#RUN dotnet SL.DotNet.dll scan --buildSessionIdFile /sealights/buildSessionId.txt --binDir /app --ignoreGeneratedCode true
 
 # https://mcr.microsoft.com/v2/dotnet/runtime-deps/tags/list
 #FROM mcr.microsoft.com/dotnet/sdk:6.0.400-alpine3.15-amd64
@@ -43,16 +43,29 @@ COPY --from=builder /cartservice .
 COPY --from=builder /sealights /sealights
 ENV ASPNETCORE_URLS http://*:7070
 
-#ENV CORECLR_ENABLE_PROFILING=1
-#ENV CORECLR_PROFILER="{3B1DAA64-89D4-4999-ABF4-6A979B650B7D}"
-#ENV CORECLR_PROFILER_PATH_32=/sealights/libSL.DotNet.ProfilerLib.Linux.so
-#ENV CORECLR_PROFILER_PATH_64=/sealights/libSL.DotNet.ProfilerLib.Linux.so
-#ENV SL_CollectorId=SL_CovCollectorAgentCartservice
-#ENV SL_IS_AZURE=1
+ENV CORECLR_ENABLE_PROFILING=1
+ENV CORECLR_PROFILER="{3B1DAA64-89D4-4999-ABF4-6A979B650B7D}"
+ENV CORECLR_PROFILER_PATH_32=/sealights/libSL.DotNet.ProfilerLib.Linux.so
+ENV CORECLR_PROFILER_PATH_64=/sealights/libSL.DotNet.ProfilerLib.Linux.so
+ENV SL_CollectorId=SL_CovCollectorAgentCartservice
+ENV SL_PROFILER_INITIALIZECOLLECTOR=1
+ENV SL_PROFILER_INITIALIZECOLLECTOR_MODE="cdAgent"
+ENV SL_PROFILER_BLOCKING_CONNECTION_STARTUP="NonBlocking"
+
+SL_GENERAL_APPNAME="otel_cartservice"
+SL_GENERAL_BRANCHNAME="main"
+SL_GENERAL_BUILDNAME="${BUILD_NAME}"
+SL_LABID="integ_main_TestAppWeatherApi"
+SL_SCAN_BINDIR="."
+SL_SCAN_INCLUDENAMESPACES_0 = "cartservice.*"
+#SL_SCAN_INCLUDEASSEMBLIES = "*StatelessWebApp"
+SL_FEATURES_IDENTIFYMETHODSBYFQN="true"
+
 #ENV SL_LogDir /tmp/logs
 #ENV SL_LogLevel=6
+#ENV SL_SESSION_TOKENFILE=/sealightssltoken.txt
 
 #RUN dotnet /sealights/SL.DotNet.dll startBackgroundTestListener --buildSessionIdFile /sealights/buildSessionId.txt --testListenerSessionKey SL_CovCollectorAgentCartservice &
 
-ENTRYPOINT ["dotnet","/sealights/SL.DotNet.dll","testListener","--buildSessionIdFile","/sealights/buildSessionId.txt","--labId","integ_test_otel","--workingDir","/app","--target","cartservice","--profilerLogDir","/tmp","--profilerLogLevel","6","--logAppendFile","true","--logFilename","/tmp/collector"]
-#ENTRYPOINT ["/app/cartservice"]
+#ENTRYPOINT ["dotnet","/sealights/SL.DotNet.dll","testListener","--buildSessionIdFile","/sealights/buildSessionId.txt","--labId","integ_test_otel","--workingDir","/app","--target","cartservice","--profilerLogDir","/tmp","--profilerLogLevel","6","--logAppendFile","true","--logFilename","/tmp/collector"]
+ENTRYPOINT ["/app/cartservice"]
