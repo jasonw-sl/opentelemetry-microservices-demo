@@ -43,6 +43,10 @@ COPY --from=builder /cartservice .
 COPY --from=builder /sealights /sealights
 ENV ASPNETCORE_URLS http://*:7070
 
+ENV COR_ENABLE_PROFILING=1
+ENV COR_PROFILER="{01CA2C22-DC03-4FF5-8350-59E32A3536BA}"
+ENV COR_PROFILER_PATH_32=/sealights/libSL.DotNet.ProfilerLib.Linux.so
+ENV COR_PROFILER_PATH_64=/sealights/libSL.DotNet.ProfilerLib.Linux.so
 ENV CORECLR_ENABLE_PROFILING=1
 ENV CORECLR_PROFILER="{3B1DAA64-89D4-4999-ABF4-6A979B650B7D}"
 ENV CORECLR_PROFILER_PATH_32=/sealights/libSL.DotNet.ProfilerLib.Linux.so
@@ -52,6 +56,7 @@ ENV SL_PROFILER_INITIALIZECOLLECTOR=1
 ENV SL_PROFILER_INITIALIZECOLLECTOR_MODE="cdAgent"
 ENV SL_PROFILER_BLOCKING_CONNECTION_STARTUP="NonBlocking"
 
+ENV SL_SESSION_TOKENFILE=/sealights/sltoken.txt
 ENV SL_GENERAL_APPNAME="otel_cartservice"
 ENV SL_GENERAL_BRANCHNAME="main"
 ENV SL_GENERAL_BUILDNAME="${BUILD_NAME}"
@@ -61,9 +66,8 @@ ENV SL_SCAN_INCLUDENAMESPACES_0 = "cartservice.*"
 #ENV SL_SCAN_INCLUDEASSEMBLIES = "*StatelessWebApp"
 ENV SL_FEATURES_IDENTIFYMETHODSBYFQN="true"
 
-#ENV SL_LogDir /tmp/logs
-#ENV SL_LogLevel=6
-#ENV SL_SESSION_TOKENFILE=/sealightssltoken.txt
+ENV SL_LogDir /tmp/logs
+ENV SL_LogLevel=6
 
 #RUN dotnet /sealights/SL.DotNet.dll startBackgroundTestListener --buildSessionIdFile /sealights/buildSessionId.txt --testListenerSessionKey SL_CovCollectorAgentCartservice &
 
