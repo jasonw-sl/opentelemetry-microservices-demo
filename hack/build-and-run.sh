@@ -49,7 +49,7 @@ while IFS= read -d $'\0' -r dir; do
     (
         cd "${builddir}"
         log "Building: ${image}"
-        docker build -t "${image}" .
+        docker build -t "${image}" --build-arg BUILD_NUMBER="${BUILD_NUMBER}" .
     )
 done < <(find "${SCRIPTDIR}/../src" -mindepth 1 -maxdepth 1 -type d -print0)
 
