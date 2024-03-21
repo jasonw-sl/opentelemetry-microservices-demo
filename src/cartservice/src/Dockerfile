@@ -70,6 +70,9 @@ ENV SL_FEATURES_IDENTIFYMETHODSBYFQN="true"
 
 ENV SL_LogDir /tmp
 ENV SL_LogLevel=6
+ENV SL_Logging_toFile="true"
+ENV SL_LOGGING_ENABLED="true"
+ENV SL_LOGGING_FileName="/tmp/cdagent.log"
 
 #RUN dotnet /sealights/SL.DotNet.dll startBackgroundTestListener --buildSessionIdFile /sealights/buildSessionId.txt --testListenerSessionKey SL_CovCollectorAgentCartservice &
 
