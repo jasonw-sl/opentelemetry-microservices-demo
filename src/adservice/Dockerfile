@@ -22,7 +22,7 @@ RUN chmod +x gradlew
 RUN ./gradlew downloadRepos
 
 COPY . .
-RUN java -jar sl-build-scanner.jar -gradle -configfile slgradle.json -workspacepath .
+#RUN java -jar sl-build-scanner.jar -gradle -configfile slgradle.json -workspacepath .
 RUN chmod +x gradlew
 RUN ./gradlew installDist
 
@@ -40,7 +40,9 @@ WORKDIR /app
 COPY --from=builder /app .
 COPY agent/opentelemetry-javaagent.jar .
 
-ENV JAVA_TOOL_OPTIONS="-javaagent:sl-test-listener.jar -Dsl.tags=script,container -Dsl.labId=integ_test_otel -Dsl.log.toConsole=true -Dsl.log.level=info"
+ENV JAVA_TOOL_OPTIONS="-javaagent:sl-cd-agent.jar -Dsl.tokenFile=sltoken.txt -Dsl.appName=otel_adservice -Dsl.labId=integ_test_otel -Dsl.includes=*hipstershop.AdService* -Dsl.excludes=*hipstershop.AdServiceGrpc* -Dsl.workspace=/app/build/install/hipstershop/bin/"
+#ENV JAVA_TOOL_OPTIONS="-javaagent:sl-test-listener.jar -Dsl.tags=script,container -Dsl.labId=integ_test_otel -Dsl.log.toConsole=true -Dsl.log.level=info"
+
 
 RUN apt-get update && apt-get install -y procps
 
