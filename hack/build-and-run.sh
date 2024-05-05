@@ -121,8 +121,16 @@ run "-p 8081:8080 -e PORT=8080 \
      -e AD_SERVICE_ADDR=adservice:9555" "$containername"
 
 containername=paymentservice
-run "-p 50051 -e PORT=50051 -e NODE_OPTIONS='--require ./node_modules/slnodejs/lib/preload.js' \
-     " "$containername"
+log "$containername"
+docker run -d --rm --network=$networkName \
+-e OTEL_EXPORTER_OTLP_TRACES_ENDPOINT=$otelCollector \
+-e OTEL_RESOURCE_ATTRIBUTES=service.name=$containername,service.version=$TAG \
+-p 50051 -e PORT=50051\
+-e NODE_OPTIONS="--require ./node_modules/slnodejs/lib/preload.js" \
+--name $containername $containername:$TAG >&2 || true
+
+#run "-p 50051 -e PORT=50051 -e NODE_OPTIONS='--require ./node_modules/slnodejs/lib/preload.js' \
+#     " "$containername"
 
 containername=productcatalogservice
 run "-p 3550 -e PORT=3550 \
