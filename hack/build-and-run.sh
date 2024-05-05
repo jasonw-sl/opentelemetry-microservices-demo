@@ -121,7 +121,8 @@ run "-p 8081:8080 -e PORT=8080 \
      -e AD_SERVICE_ADDR=adservice:9555" "$containername"
 
 containername=paymentservice
-run "-p 50051 -e PORT=50051 -e NODE_OPTIONS='--require ./node_modules/slnodejs/lib/preload.js'" "$containername"
+run "-p 50051 -e PORT=50051 -e NODE_OPTIONS='--require ./node_modules/slnodejs/lib/preload.js' \
+     " "$containername"
 
 containername=productcatalogservice
 run "-p 3550 -e PORT=3550 \
