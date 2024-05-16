@@ -127,7 +127,7 @@ docker run -d --rm --network=$networkName \
 -e OTEL_RESOURCE_ATTRIBUTES=service.name=$containername,service.version=$TAG \
 -p 50051 -e PORT=50051 \
 -e NODE_OPTIONS="--require ./node_modules/slnodejs/lib/preload.js" \
--e SL_LAB_ID="integ_test_otel" \
+-e SL_labId="integ_test_otel" \
 --name $containername $containername:$TAG >&2 || true
 
 #run "-p 50051 -e PORT=50051 -e NODE_OPTIONS='--require ./node_modules/slnodejs/lib/preload.js' \
