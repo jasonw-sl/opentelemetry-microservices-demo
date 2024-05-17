@@ -40,7 +40,7 @@ WORKDIR /app
 COPY --from=builder /app .
 COPY agent/opentelemetry-javaagent.jar .
 
-ENV JAVA_TOOL_OPTIONS="-javaagent:sl-cd-agent.jar -Dsl.tokenFile=sltoken.txt -Dsl.appName=otel_adservice -Dsl.labId=integ_test_otel -Dsl.includes=*hipstershop.AdService* -Dsl.excludes=*hipstershop.AdServiceGrpc* -Dsl.workspace=/app/build/install/hipstershop/lib/"
+ENV JAVA_TOOL_OPTIONS="-javaagent:sl-cd-agent.jar -Dsl.log.toConsole=true -Dsl.log.level=debug -Dsl.tokenFile=sltoken.txt -Dsl.appName=otel_adservice -Dsl.labId=integ_test_otel -Dsl.includes=*hipstershop.AdService* -Dsl.excludes=*hipstershop.AdServiceGrpc* -Dsl.workspace=/app/build/install/hipstershop/lib/"
 #ENV JAVA_TOOL_OPTIONS="-javaagent:sl-test-listener.jar -Dsl.tags=script,container -Dsl.labId=integ_test_otel -Dsl.log.toConsole=true -Dsl.log.level=info"
 
 
