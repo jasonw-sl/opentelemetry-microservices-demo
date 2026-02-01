@@ -1,22 +1,55 @@
-```mermaid
-graph TD
+### Diagram Description (Visual Layout)
 
-subgraph CustomerEnv["Customer Environment"]
-  A["Ticket Tree Builder - Jira or ADO query"] -->|ticket_info.json| B["Coverage Report Generator - US_RPT_create_report_info_files.py"]
+**Boundary: Customer Environment**
 
-  B -->|Create report| SL1["SeaLights REST API - Create coverage report"]
-  SL1 -->|report_id| B
+Inside the customer environment, the flow is strictly left‑to‑right:
 
-  B -->|Fetch per ticket subtree| SL2["SeaLights REST API - Get coverage results"]
-  SL2 -->|coverage data| B
+1. **Ticket Tree Builder (Jira / ADO)**
 
-  B -->|ReportInfo_<TICKET>.json| C["Intermediate Coverage Model - ReportInfo_*.json"]
+   * Queries Jira or Azure DevOps using customer credentials
+   * Builds a hierarchical ticket tree (stories, children, subtasks)
+   * Produces a structured `ticket_info.json`
 
-  C --> D1["HTML Reports - US2_RPT_create_html_reports.py"]
-  C --> D2["Confluence Publisher - US3_RPT_create_confluence_reports.py"]
-  C --> D3["Jira Plugin Update - US4_RPT_update_jira_plugin.py"]
-  C --> D4["Jira Field Update - US4_RPT_update_jira.py"]
-  C --> D5["ADO Coverage Extension - US4_RPT_update_ado_plugin.py"]
-end
+2. **Coverage Report Generation (US1 – Create Report Info)**
 
-```
+   * Consumes `ticket_info.json` and customer settings
+   * Interacts with SeaLights via outbound REST APIs only:
+
+     * **Create coverage report** (single report for all tickets)
+     * **Fetch coverage results per top‑level ticket subtree**
+   * Produces:
+
+     * `ReportInfo_<TICKET>.json` (stable intermediate model)
+     * Per‑ticket raw coverage result files
+
+3. **Intermediate Contract: ReportInfo Files**
+
+   * `ReportInfo_*.json` acts as the formal boundary between data generation and publishing
+   * All downstream consumers rely on this format
+
+4. **Publishers / Outputs** (parallel fan‑out):
+
+   * **HTML Reports** (US2)
+   * **Confluence Pages** (US3)
+   * **Jira Updates**:
+
+     * Plugin‑backed coverage panel (US4 – Jira plugin)
+     * Native Jira custom field updates (US4 – Jira fields)
+   * **Azure DevOps Updates**:
+
+     * SeaLights Coverage Extension data (US4 – ADO plugin)
+
+**External Systems (no inbound access):**
+
+* **SeaLights**: accessed only via outbound REST API calls from the customer environment
+* **Jira / ADO**: accessed via customer‑managed credentials and network rules
+
+### Key Architectural Properties
+
+* All scripts execute **entirely within the customer environment**
+* SeaLights never initiates connections into customer systems
+* Jira / ADO are both **inputs** (ticket metadata) and **outputs** (coverage publishing)
+* `ReportInfo_*.json` is the stable, auditable hand‑off between stages
+* US1 is the only component responsible for SeaLights report orchestration
+  )**
+* `ReportInfo_*.json` is the stable intermediate contract between generation and publishing
