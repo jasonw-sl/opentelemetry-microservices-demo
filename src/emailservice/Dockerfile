@@ -47,7 +47,7 @@ RUN sl-python scan
 
 RUN mkdir -p /opt/python-startup
 RUN cat > /opt/python-startup/sitecustomize.py <<'PY'
-import python_agent.bootstrap.sitecustomize
+import python_agent.init
 PY
 ENV PYTHONPATH="/opt/python-startup:${PYTHONPATH}"
 
