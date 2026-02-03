@@ -47,7 +47,7 @@ RUN sl-python scan
 
 RUN mkdir -p /opt/python-startup
 RUN cat > /opt/python-startup/sitecustomize.py <<'PY'
-import sealights_python_agent as sl
+import python_agent as sl
 sl.start()
 PY
 ENV PYTHONPATH="/opt/python-startup:${PYTHONPATH}"
