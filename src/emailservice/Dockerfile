@@ -51,9 +51,6 @@ import python_agent.init
 PY
 ENV PYTHONPATH="/opt/python-startup:${PYTHONPATH}"
 
-#ENV SL_TOKENFILE=/email_server/sltoken.txt
-#ENV SL_BUILDSESSIONIDFILE=/email_server/buildSessionId.txt
-#ENV SL_LABID=test
 ENV SL_LAB_ID=integ_test_otel
 
 EXPOSE 8080
