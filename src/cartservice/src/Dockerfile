@@ -13,7 +13,7 @@
 # limitations under the License.
 
 # https://mcr.microsoft.com/v2/dotnet/sdk/tags/list
-FROM mcr.microsoft.com/dotnet/sdk:6.0.200 as builder
+FROM mcr.microsoft.com/dotnet/sdk:6.0.201 as builder
 WORKDIR /app
 COPY cartservice.csproj .
 RUN dotnet restore cartservice.csproj -r linux-x64
@@ -30,13 +30,8 @@ RUN tar xvfz sealights-dotnet-agent-latest.tar.gz
 #RUN dotnet SL.DotNet.dll scan --buildSessionIdFile /sealights/buildSessionId.txt --binDir /app --ignoreGeneratedCode true
 
 # https://mcr.microsoft.com/v2/dotnet/runtime-deps/tags/list
-#FROM mcr.microsoft.com/dotnet/sdk:6.0.400-alpine3.15-amd64
-# debian
-#FROM mcr.microsoft.com/dotnet/sdk:6.0.400-bullseye-slim-amd64
-# ubuntu
-FROM mcr.microsoft.com/dotnet/sdk:6.0.400-jammy-amd64
-#FROM mcr.microsoft.com/dotnet/runtime-deps:6.0.3-alpine3.15-amd64
-RUN GRPC_HEALTH_PROBE_VERSION=v0.4.7 && \
+FROM mcr.microsoft.com/dotnet/runtime-deps:6.0.3-alpine3.15-amd64
+RUN GRPC_HEALTH_PROBE_VERSION=v0.4.8 && \
     wget -qO/bin/grpc_health_probe https://github.com/grpc-ecosystem/grpc-health-probe/releases/download/${GRPC_HEALTH_PROBE_VERSION}/grpc_health_probe-linux-amd64 && \
     chmod +x /bin/grpc_health_probe
 WORKDIR /app

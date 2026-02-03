@@ -1,3 +1,5 @@
+## This demo is not being updated anymore, please check out the [official OpenTelemetry Demo](https://github.com/open-telemetry/opentelemetry-demo).
+
 <p align="center">
 <img src="src/frontend/static/icons/Hipster_HeroLogoCyan.svg" width="300" alt="Online Boutique" />
 </p>
@@ -40,8 +42,8 @@ If you want to test it locally without a kubernetes cluster, you can follow the 
 1. **Clone this repository.**
 
 ```
-git clone https://github.com/julianocosta89/microservices-demo.git
-cd microservices-demo
+git clone https://github.com/julianocosta89/opentelemetry-microservices-demo.git
+cd opentelemetry-microservices-demo
 ```
 
 2. **Build and run the containers.**  
