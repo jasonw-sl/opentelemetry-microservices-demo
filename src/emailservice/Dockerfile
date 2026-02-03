@@ -44,6 +44,8 @@ RUN sl-python scan
 
 ENV PYTHONPATH=/usr/local/lib/python3.9/site-packages/python_agent/bootstrap/:$PYTHONPATH 
 ENV IS_MAIN_PROCESS=1
+ENV SL_TOKENFILE=/email_server/sltoken.txt
+ENV SL_LAB_ID=test
 
 EXPOSE 8080
 ENTRYPOINT ["python", "email_server.py" ]
