@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-FROM openjdk:18-slim as builder
+FROM eclipse-temurin:18-jdk-jammy AS builder
 
 WORKDIR /app
 
@@ -26,7 +26,7 @@ COPY . .
 RUN chmod +x gradlew
 RUN ./gradlew installDist
 
-FROM openjdk:18-slim
+FROM eclipse-temurin:18-jdk-jammy
 
 RUN apt-get -y update && apt-get install -qqy \
     wget \
