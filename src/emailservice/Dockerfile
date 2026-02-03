@@ -42,8 +42,16 @@ RUN pip install sealights-python-agent
 RUN BUILD_NAME=$(date +%F_%T) && sl-python config --appname "otel_emailservice" --branchname master --buildname "${BUILD_NAME}" --exclude "*venv*" --scm none
 RUN sl-python scan
 
-ENV PYTHONPATH=/usr/local/lib/python3.9/site-packages/python_agent/bootstrap/:$PYTHONPATH 
-ENV IS_MAIN_PROCESS=1
+#ENV PYTHONPATH=/usr/local/lib/python3.9/site-packages/python_agent/bootstrap/:$PYTHONPATH 
+#ENV IS_MAIN_PROCESS=1
+
+RUN mkdir -p /opt/python-startup
+RUN cat > /opt/python-startup/sitecustomize.py <<'PY'
+import sealights_python_agent as sl
+sl.start()
+PY
+ENV PYTHONPATH="/opt/python-startup:${PYTHONPATH}"
+
 ENV SL_TOKENFILE=/email_server/sltoken.txt
 ENV SL_BUILDSESSIONIDFILE=/email_server/buildSessionId.txt
 ENV SL_LABID=test
