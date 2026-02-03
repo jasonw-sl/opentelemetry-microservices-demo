@@ -42,7 +42,7 @@ RUN pip install sealights-python-agent
 RUN BUILD_NAME=$(date +%F_%T) && sl-python config --appname "otel_emailservice" --branchname master --buildname "${BUILD_NAME}" --exclude "*venv*" --scm none
 RUN sl-python scan
 
-ENV PYTHONPATH=bootstrap:$PYTHONPATH 
+ENV PYTHONPATH=/usr/local/lib/python3.9/site-packages/python_agent/bootstrap/:$PYTHONPATH 
 ENV IS_MAIN_PROCESS=1
 
 EXPOSE 8080
