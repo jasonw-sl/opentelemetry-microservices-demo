@@ -51,9 +51,10 @@ import python_agent.init
 PY
 ENV PYTHONPATH="/opt/python-startup:${PYTHONPATH}"
 
-ENV SL_TOKENFILE=/email_server/sltoken.txt
-ENV SL_BUILDSESSIONIDFILE=/email_server/buildSessionId.txt
+#ENV SL_TOKENFILE=/email_server/sltoken.txt
+#ENV SL_BUILDSESSIONIDFILE=/email_server/buildSessionId.txt
 ENV SL_LABID=test
+ENV SL_LAB_ID=test1
 
 EXPOSE 8080
 ENTRYPOINT ["python", "email_server.py" ]
